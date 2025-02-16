@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>New Vehicle Entry</h2>
+    {% if slot %}
+        <p>Vehicle {{ vehicle_number }} assigned to slot {{ slot }}.</p>
+    {% endif %}
+    <form method="POST">
+        <label for="vehicle_number">License Plate:</label>
+        <input type="text" name="vehicle_number" required>
+        <br>
+        <label for="vehicle_class">Vehicle Type:</label>
+        <select name="vehicle_class" required>
+            <option value="Car">Car ($2/hr)</option>
+            <option value="Motorcycle">Motorcycle ($1/hr)</option>
+            <option value="Truck">Truck ($3/hr)</option>
+        </select>
+        <br>
+        <input type="submit" value="Register Entry">
+    </form>
+{% endblock %}

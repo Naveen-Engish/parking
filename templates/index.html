@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Welcome to Parking Management System</h2>
+    <p>Total parked vehicles: {{ occupied_slots|length }}</p>
+    <p>Total slots available: {{ total_slots }}</p>
+
+    <h3>Occupied Slots:</h3>
+    <ul>
+        {% for record in occupied_slots %}
+            <li>Slot {{ record.slot }}: {{ record.vehicle_number }} ({{ record.vehicle_class }})</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
