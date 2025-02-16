@@ -42,10 +42,19 @@ def get_available_slot():
 
 @app.route('/')
 def index():
-    occupied_slots = ParkingRecord.query.filter_by(exit_time=None).all()
+    occupied_slots = ParkingRecord.query.filter_by(exit_time=None).count()
     total_slots = len(SLOTS)
-    return render_template('index.html', occupied_slots=occupied_slots, total_slots=total_slots)
-
+    occupied_records = ParkingRecord.query.filter_by(exit_time=None).all()
+    slot_status = {slot: ParkingRecord.query.filter_by(slot=slot, exit_time=None).first() for slot in SLOTS}
+    
+    return render_template(
+        'index.html',
+        occupied_slots=occupied_slots,
+        total_slots=total_slots,
+        SLOTS=SLOTS,
+        slot_status=slot_status,  # Pass slot status (occupied/free) to the template
+        occupied_records=occupied_records  # Pass occupied records to the template
+    )
 
 
 @app.route('/entry', methods=['GET', 'POST'])

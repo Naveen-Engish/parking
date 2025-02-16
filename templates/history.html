@@ -1,36 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>Parking History</h2>
-    <table>
-        <tr>
-            <th>License Plate</th>
-            <th>Vehicle Type</th>
-            <th>Slot</th>
-            <th>Entry Time</th>
-            <th>Exit Time</th>
-            <th>Cost</th>
-        </tr>
-        {% for record in records %}
-        <tr>
-            <td>{{ record.vehicle_number }}</td>
-            <td>{{ record.vehicle_class }}</td>
-            <td>{{ record.slot }}</td>
-            <td>{{ record.entry_time.strftime('%Y-%m-%d %H:%M') }}</td>
-            <td>
-                {% if record.exit_time %}
-                    {{ record.exit_time.strftime('%Y-%m-%d %H:%M') }}
-                {% else %}
-                    Still Parked
-                {% endif %}
-            </td>
-            <td>
-                {% if record.cost %}
-                    ${{ "%.2f"|format(record.cost) }}
-                {% else %}
-                    -
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    <h2>Parking History 📜</h2>
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+            <thead>
+                <tr style="background: var(--primary); color: white;">
+                    <th style="padding: 1rem;">Vehicle</th>
+                    <th>Type</th>
+                    <th>Slot</th>
+                    <th>Entry Time</th>
+                    <th>Exit Time</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                    <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.1);">
+                        <td style="padding: 1rem;">{{ record.vehicle_number }}</td>
+                        <td>{{ record.vehicle_class }}</td>
+                        <td>{{ record.slot }}</td>
+                        <td>{{ record.entry_time.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>
+                            {% if record.exit_time %}
+                                {{ record.exit_time.strftime('%Y-%m-%d %H:%M') }}
+                            {% else %}
+                                <em style="color: var(--danger);">Active</em>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if record.cost %}
+                                ${{ "%.2f"|format(record.cost) }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

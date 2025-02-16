@@ -1,13 +1,44 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>Welcome to Parking Management System</h2>
-    <p>Total parked vehicles: {{ occupied_slots|length }}</p>
-    <p>Total slots available: {{ total_slots }}</p>
+    <div class="stats">
+        <div class="stat-card">
+            <h3>Total Capacity</h3>
+            <p style="font-size: 2rem; color: var(--primary);">{{ total_slots }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Available Spaces</h3>
+            <p style="font-size: 2rem; color: var(--success);">{{ total_slots - occupied_slots }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Occupied Spaces</h3>
+            <p style="font-size: 2rem; color: var(--danger);">{{ occupied_slots }}</p>
+        </div>
+    </div>
 
-    <h3>Occupied Slots:</h3>
-    <ul>
-        {% for record in occupied_slots %}
-            <li>Slot {{ record.slot }}: {{ record.vehicle_number }} ({{ record.vehicle_class }})</li>
+    <h2>Live Parking Map 🗺️</h2>
+    <div class="grid-container">
+        {% for slot in SLOTS %}
+            <div class="slot {% if slot_status[slot] %}occupied{% else %}free{% endif %}" 
+                 title="{% if slot_status[slot] %}Occupied by {{ slot_status[slot].vehicle_number }} ({{ slot_status[slot].vehicle_class }}){% else %}Available{% endif %}">
+                {{ slot }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <h2>Currently Parked Vehicles 🚘</h2>
+    <ul class="occupied-list">
+        {% for record in occupied_records %}
+            <li>
+                <div>
+                    <strong>{{ record.vehicle_number }}</strong>
+                    <small>({{ record.vehicle_class }})</small>
+                </div>
+                <div>
+                    🅿️ Slot {{ record.slot }}
+                    <br>
+                    <small>Arrived: {{ record.entry_time.strftime('%H:%M') }}</small>
+                </div>
+            </li>
         {% endfor %}
     </ul>
 {% endblock %}

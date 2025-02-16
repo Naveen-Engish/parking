@@ -1,20 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>New Vehicle Entry</h2>
-    {% if slot %}
-        <p>Vehicle {{ vehicle_number }} assigned to slot {{ slot }}.</p>
-    {% endif %}
+    <h2>New Vehicle Entry 🚘</h2>
     <form method="POST">
-        <label for="vehicle_number">License Plate:</label>
-        <input type="text" name="vehicle_number" required>
-        <br>
-        <label for="vehicle_class">Vehicle Type:</label>
+        {% if slot %}
+            <div style="text-align: center; margin: 2rem 0;">
+                <div style="font-size: 1.5rem; color: var(--success);">
+                    🎉 Success! Assigned to 
+                    <span style="background: var(--dark); color: white; padding: 0.5rem 1rem; border-radius: 8px;">
+                        {{ slot }}
+                    </span>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <small>Vehicle: {{ vehicle_number }}</small>
+                </div>
+            </div>
+        {% endif %}
+
+        <label>License Plate:</label>
+        <input type="text" name="vehicle_number" placeholder="ABC123" required>
+
+        <label>Vehicle Type:</label>
         <select name="vehicle_class" required>
-            <option value="Car">Car ($2/hr)</option>
-            <option value="Motorcycle">Motorcycle ($1/hr)</option>
-            <option value="Truck">Truck ($3/hr)</option>
+            <option value="Car">🚗 Car ($2/hr)</option>
+            <option value="Motorcycle">🏍️ Motorcycle ($1/hr)</option>
+            <option value="Truck">🚚 Truck ($3/hr)</option>
         </select>
-        <br>
-        <input type="submit" value="Register Entry">
+
+        <input type="submit" value="Register Entry →">
     </form>
 {% endblock %}

@@ -1,13 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>Vehicle Exit</h2>
-    {% if cost %}
-        <p>Vehicle {{ vehicle }} exited from slot {{ slot }}. Total cost: ${{ cost }}</p>
-    {% endif %}
+    <h2>Vehicle Exit 🚪</h2>
     <form method="POST">
-        <label for="vehicle_number">License Plate:</label>
-        <input type="text" name="vehicle_number" required>
-        <br>
-        <input type="submit" value="Process Exit">
+        {% if cost %}
+            <div style="text-align: center; margin: 2rem 0;">
+                <div style="font-size: 1.5rem; color: var(--primary);">
+                    💵 Total Charge: ${{ cost }}
+                </div>
+                <div style="margin-top: 1rem;">
+                    <small>Vehicle: {{ vehicle }} | Slot: {{ slot }}</small>
+                </div>
+            </div>
+        {% endif %}
+
+        <label>License Plate:</label>
+        <input type="text" name="vehicle_number" placeholder="ABC123" required>
+
+        <input type="submit" value="Process Exit →">
     </form>
 {% endblock %}
